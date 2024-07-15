@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <header>
+        <div class="div_contato">
+            <div class="div_central">
+                <nav>
+                    <a href="#"><img src="imagens/logotipo-do-instagram.png" alt="instagram"></a>
+                    <a href="#"><img src="imagens/facebook.png" alt="instagram"></a>
+                </nav>
+                <ul class="header_contato">
+                    <li>
+                        <img src="imagens/telefone.png" alt="instagram">(37) 99999-9999
+                    </li>
+                    <li>
+                        <img src="imagens/whatsapp.png" alt="instagram">(37) 99999-9999
+                    </li>
+                    <li>
+                        <img src="imagens/o-email.png" alt="instagram">email@email.com
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="header_principal">
+              <div class="main_header">
+                <div class="container_header">
+                    <a href="#"><img src="imagens/logo.png" alt=""></a>
+                    <span id="icone_menu" class="material-symbols-outlined" onclick="abrirMenu()">menu</span>
+                </div>
+                <nav id="menu">
+                    <ul>
+                        <li><a href="#ancora_planos">INICIO</a></li>
+                        <li><a href="#ancora_contato">DESTAQUES</a></li>
+                        <li><a href="#ancora_duvidas">BUSCAR IMOVEIS</a></li>
+                        <li> <a href="#ancora_sobre">ANUNCIAR IMOVEIS</a></li> 
+                        <li> <a href="#ancora_modalidade">CONTATO</a></li>
+                        <li> <a href="#ancora_modalidade">QUEM SOMOS</a></li>  
+                     </ul>
+                </nav>
+            </div>
+        </div>
+
+    </header>
+    <main>
+        <div class="container_pesquisa">
+            <div class="pesquisa_principal">
+                <dav class="lista_pesquisa">
+                    <input type="radio" id="locacao_venda1" name="contact" value="locacao" checked/>
+                    <label for="locacao_venda1">Locação</label>
+                    <input type="radio" id="locacao_venda2" name="contact" value="venda" />
+                    <label for="locacao_venda2">Venda</label>
+                </dav>
+                <div class="pesquisa_div">
+                    <select name="" id="">
+                        <option value="">Tipo</option>
+                        <option value="">Apartamento</option>
+                        <option value="">Casa</option>
+                        <option value="">Terreno</option>
+                    </select>
+                    <select>
+                        <option value="todas-cidades">Todas as cidades</option>
+                        <option value="bom-despacho">Bom Despacho-MG</option>
+                    </select>
+                    <select>
+                        <option value="todos-bairros">Todos os bairros</option>
+                        <option value="sao-jose">São José</option>
+                        <option value="centro">Centro</option>
+                    </select>
+                    <select>
+                        <option value="ate-400k">Até 400.000</option>
+                        <option value="400k-600k">De 400.000 até 600.000</option>
+                        <option value="600k-800k">De 600.000 até 800.000</option>
+                        <option value="800k-1m">De 800.000 até 1.000.000</option>
+                    </select>
+                    <select>
+                        <option value="">Quartos</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                    </select>
+                    <input type="button" value="Buscar" id="button_buscar">
+                </div>
+            </div>
+        
+        </div>
+    </main>
+    <script src="script.js"></script>    
+</body>
+<footer>
+
+</footer>
+</html>
