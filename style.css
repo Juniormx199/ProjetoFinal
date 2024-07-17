@@ -74,8 +74,8 @@
 
 }
 
-.header_principal , .div_central{ 
-    max-width: 1024px;
+.header_principal , .div_central , .div_main{ 
+    max-width: 1280px;
     margin: auto auto;
     
 }
@@ -92,7 +92,7 @@
 }
 
 .div_contato{
-    background-color:rgb(85, 85, 255);
+    background-image: linear-gradient(to top, #5555ff, #433ed5, #3028ad, #1b1386, #000062);
     height: 50px;
 }
 
@@ -119,7 +119,7 @@ body{
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 100vw;
+    width: 100%;
     height: 70vh;
     display: flex;
 }
@@ -223,3 +223,139 @@ input[type="radio"]:checked + label {
 .inf_destaque{
     padding: 20px;
 }
+
+.lista_destaque{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.card_destaque{
+    width: 30%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-left: 20px;
+    list-style: none;
+    margin-top: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.486);
+}
+
+.img1{
+    background-image: url(imagens/casa1.jpg);
+}
+.img2{
+    background-image: url(imagens/casa2.jpg);
+}
+.img3{
+    background-image: url(imagens/casa3.jpg);
+}
+.img4{
+    background-image: url(imagens/casa4.jpg);
+}
+.img5{
+    background-image: url(imagens/casa5.jpg);
+}
+.img6{
+    background-image: url(imagens/casa6.jpg);
+}
+
+
+.img_destaque{
+    width: 100%;
+    height: 280px;
+    border-radius: 10px 10px 0 0;
+    background-position: center;
+    background-size: cover;
+
+}
+
+.inf_imoveis{
+    margin: 15px 0 15px 0;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-top: 1px solid rgb(212, 212, 212);
+}
+
+.inf_imoveis li {
+    list-style: none;
+    display: flex;
+}
+
+.inf_card{
+    padding: 20px;
+}
+
+.titulo_destaque{
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 4px black solid;
+    margin: 20px;
+}
+
+.btn_detalhes{
+    margin: auto auto 15px;
+    display: block;
+    height: 40px;
+    max-width: 200px;
+    width: 80%;
+    color: white;
+    background-color: rgb(85, 85, 255);
+    border-radius: 10px;
+    border:  1px solid rgba(0, 0, 0, 0.575);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+footer{
+    margin-top: 50px;
+    background-image: linear-gradient(to bottom, #5555ff, #433ed5, #3028ad, #1b1386, #000062);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    color: white;
+    padding: 50px;
+}
+
+
+footer li{
+    list-style: none;
+    margin-top: 5px;
+}
+
+footer a{
+    text-decoration: none;
+    color: white;
+}
+
+
+.footer_contato img{
+    width: 20px;
+    margin-right: 10px;
+}
+
+.footer_redes img{
+    width: 40px;
+}
+
+.footer_redes a{
+    margin-right: 20px;
+}
+
+.footer_redes{
+    margin: 10px 0;
+}
+
+.footer_menu a{
+    display: block;
+    padding: 5px;
+}
+
+.footer_menu a:hover{
+   color: rgb(0, 0, 0);
+}
+
+
+
