@@ -1,0 +1,38 @@
+  <div class="div_contato">
+        <div class="div_central">
+            <nav>
+                <a href="#"><img src="/static/imagens/logotipo-do-instagram.png" alt="instagram"></a>
+                <a href="#"><img src="/static/imagens/facebook.png" alt="facebook"></a>
+            </nav>
+            <ul class="header_contato">
+                <li>
+                    <img src="/static/imagens/telefone.png" alt="instagram">(37) 99999-9999
+                </li>
+                <li>
+                    <img src="/static/imagens/whatsapp.png" alt="instagram">(37) 99999-9999
+                </li>
+                <li>
+                    <img src="/static/imagens/o-email.png" alt="instagram">email@email.com
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header_principal">
+          <div class="main_header">
+            <div class="container_header">
+                <a href="{{url_for('home.home')}}"><img src="/static/imagens/logo.png" alt=""></a>
+                <span id="icone_menu" class="material-symbols-outlined" onclick="abrirMenu()">menu</span>
+            </div>
+            <nav id="menu">
+                <ul>
+                    <li><a href="#ancora_planos">INICIO</a></li>
+                    <li><a href="#ancora_contato">DESTAQUES</a></li>
+                    <li><a href="/imoveis/filtros">BUSCAR IMOVEIS</a></li>
+                    <li> <a href="#ancora_modalidade">CONTATO</a></li>
+                    <li> <a href="#ancora_modalidade">QUEM SOMOS</a></li>
+                    <li> <a href="{{url_for('imoveis.home')}}">ENTRAR</a></li> 
+                 </ul>
+            </nav>
+        </div>
+    </div>

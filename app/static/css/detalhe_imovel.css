@@ -1,0 +1,21 @@
+
+.informacoes_imovel{
+    border: solid 1px black;
+    padding: 30px;
+    border-radius:8px;
+}
+
+
+.container_imovel{
+    border: solid 1px black;
+    padding: 30px;
+    border-radius:8px;
+}
+
+li{
+    list-style: none;
+}
+
+body{
+    background-color: #f8f8f8;
+}

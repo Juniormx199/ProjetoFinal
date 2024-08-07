@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Imóveis</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <style>
+        .btn-check:checked + .btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-check:focus + .btn, .btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+   
+
+        a h3{
+            color: black;
+        }
+
+        a h3:hover{
+            color: #0056b3;
+        }
+        .container_titulo_imovel{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding-right: 15px;
+        }
+        .classificado_lista{
+            background-color:#0056b3;
+            width: 70px;
+            padding: 7px;
+            color: white;
+            position: absolute;
+            z-index: 1;
+            border-radius: 0 5px 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header c-container="{{ url_for('home.header') }}"></header>
+    <main class="container_main">
+        <div>
+            <form id="filtroForm" action="{{url_for('imoveis.buscar_imoveis')}}">
+
+                <div class="mb-3">
+                    <label for="classificado" class="form-label">Classificado</label>
+                    <div>
+                        <input type="radio" class="btn-check" name="classificado" id="locacao" value="locacao" checked autocomplete="off">
+                        <label class="btn btn-outline-primary" for="locacao">Locação</label>
+
+                        <input type="radio" class="btn-check" name="classificado" id="venda" value="venda" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="venda">Venda</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tipo_filtro" class="form-label">Tipo de Imóvel</label>
+                    <div>
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="apartamento" value="Apartamento" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="apartamento">Apartamento</label>
+
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="casa" value="Casa" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="casa">Casa</label>
+
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="terreno" value="Terreno" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="terreno">Terreno</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="codigo_imovel" class="form-label">Código</label>
+                    <input type="text" id="codigo_imovel" name="codigo_imovel" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Quartos</label>
+                    <div>
+                        <input type="radio" class="btn-check" name="quartos" id="quartos1" value="1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="quartos1">1</label>
+
+                        <input type="radio" class="btn-check" name="quartos" id="quartos2" value="2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="quartos2">2</label>
+
+                        <input type="radio" class="btn-check" name="quartos" id="quartos3" value="3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="quartos3">3</label>
+
+                        <input type="radio" class="btn-check" name="quartos" id="quartos4" value="4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="quartos4">4+</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Banheiros</label>
+                    <div>
+                        <input type="radio" class="btn-check" name="banheiros" id="banheiros1" value="1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="banheiros1">1</label>
+
+                        <input type="radio" class="btn-check" name="banheiros" id="banheiros2" value="2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="banheiros2">2</label>
+
+                        <input type="radio" class="btn-check" name="banheiros" id="banheiros3" value="3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="banheiros3">3</label>
+
+                        <input type="radio" class="btn-check" name="banheiros" id="banheiros4" value="4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="banheiros4">4+</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Vagas</label>
+                    <div>
+                        <input type="radio" class="btn-check" name="vagas" id="vagas1" value="1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="vagas1">1</label>
+
+                        <input type="radio" class="btn-check" name="vagas" id="vagas2" value="2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="vagas2">2</label>
+
+                        <input type="radio" class="btn-check" name="vagas" id="vagas3" value="3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="vagas3">3</label>
+
+                        <input type="radio" class="btn-check" name="vagas" id="vagas4" value="4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="vagas4">4+</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Suítes</label>
+                    <div>
+                        <input type="radio" class="btn-check" name="suites" id="suites1" value="1" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="suites1">1</label>
+
+                        <input type="radio" class="btn-check" name="suites" id="suites2" value="2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="suites2">2</label>
+
+                        <input type="radio" class="btn-check" name="suites" id="suites3" value="3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="suites3">3</label>
+
+                        <input type="radio" class="btn-check" name="suites" id="suites4" value="4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="suites4">4+</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="valor_min" class="form-label">Valor</label>
+                    <input type="text" id="valor_min" name="valor_min" class="form-control" placeholder="Mínimo">
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="valor_max" name="valor_max" class="form-control" placeholder="Máximo">
+                </div>
+
+                <button id="filtrar" class="btn btn-primary" c-target="#lista_imoveis_filtro">Buscar</button>
+            </form>
+        </div>
+        <div c-container="{{url_for('imoveis.buscar_imoveis')}}" id="lista_imoveis_filtro">
+
+        </div>
+    </main>
+    <footer c-container="{{url_for('home.footer')}}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/cru.js"></script>
+    <script>
+        const botao = document.getElementById('filtrar');
+        botao.addEventListener("click", function(event) {
+            event.preventDefault();
+            const form = document.getElementById('filtroForm');
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+
+            formData.forEach((value, key) => {
+                params.append(key, value);
+            });
+
+            const url = `{{ url_for('imoveis.buscar_imoveis') }}?${params.toString()}`;
+            botao.setAttribute('c-get', url);
+        });
+
+        botao.click();
+    </script>
+</body>
+
+</html>

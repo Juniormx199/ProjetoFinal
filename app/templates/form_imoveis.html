@@ -1,0 +1,236 @@
+<form id="form_imoveis" 
+{% if imovel %} 
+   action="{{ url_for('imoveis.atualizar') }}" 
+{% else %} 
+  action="{{ url_for('imoveis.criar') }}" 
+{% endif %}
+method="POST"
+>
+<input type="hidden" name="_method" value="{% if imovel %}PUT{% else %}POST{% endif %}">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
+        role="tab" aria-controls="home-tab-pane" aria-selected="true">Dados</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
+        role="tab" aria-controls="profile-tab-pane" aria-selected="false">Atributos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button"
+        role="tab" aria-controls="contact-tab-pane" aria-selected="false">Endereço</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="comodidades-tab" data-bs-toggle="tab" data-bs-target="#comodidades" type="button" role="tab" aria-controls="comodidades" aria-selected="false">Comodidades</button>
+    </li>
+    
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    
+    <div class="tab-pane fade" id="comodidades" role="tabpanel" aria-labelledby="comodidades-tab">
+      <div class="div_comodidades" 
+      {% if imovel %} c-container= "{{url_for('imoveis.form_comodidades' ,pk_imovel=imovel.pk)}}" {% else %}
+      c-container= "{{url_for('imoveis.form_comodidades')}}"
+      {% endif %}
+      >
+      </div>
+   
+    </div>
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+      <div class="div_dados">
+        <div class="container_dados">
+
+          <div class="form-group">
+            <input type="hidden" name="pk" id="pk" {% if imovel %} value="{{ imovel.pk }}" {%endif %}>
+            <label for="codigo">Código do imovel:</label>
+            <p>{% if imovel %} {{ imovel.codigo }} {% endif %}</p>
+            <input type="hidden" class="form-control" name="codigo" id="id_codigo" {% if imovel %}
+              value="{{ imovel.codigo }}" {% endif %}>
+          </div>
+
+          <div class="div_inativo">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Sim" id="destaque" name="destaque" {% if imovel and imovel.destaque == 'Sim' %} checked {% endif %}>
+              <label class="form-check-label" for="destaque">
+                Imovel em dastaque
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="classificado">Classificado</label>
+              <select class="form-select" name="classificado" id="classificado">
+                <option value="locacao" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Locação</option>
+                <option value="venda"  {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Venda</option>
+                <option value="ambos"  {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Ambos</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="inativo">Inativo</label>
+              <select class="form-select" name="inativo" id="inativo">
+                <option value="Não" {% if imovel and imovel.inativo=='Sim' %} selected {% endif %}>Não</option>
+                <option value="Sim" {% if imovel and imovel.inativo=='Sim' %} selected {% endif %}>Sim</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <input type="text" class="form-control" name="descricao" id="descricao" {% if imovel %}
+            value="{{ imovel.descricao }}" {% endif %} required>
+        </div>
+        <div class="div_tipo_valor">
+          <div class="form-group">
+            <label for="valor_locacao">Valor Locação</label>
+            <input type="number" class="form-control" name="valor_locacao" id="valor_locacao" {% if imovel %}
+              value="{{ imovel.valor_locacao }}"{% else %} value="0"  {% endif %} step="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="valor_venda">Valor Venda</label>
+            <input type="number" class="form-control" name="valor_venda" id="valor_venda" {% if imovel %}
+              value="{{ imovel.valor_venda }}"{% else %} value="0"  {% endif %} step="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="valor_condominio">Valor Condominio</label>
+            <input type="number" class="form-control" name="valor_condominio" id="valor_condominio" {% if imovel %}
+              value="{{ imovel.valor_condominio }}" {% else %}  value="0" {% endif %} step="1" required>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="informacoes">Informações</label>
+          <textarea class="form-control" name="informacoes" id="informacoes"
+            rows="5">{% if imovel %} {{ imovel.informacoes }} {% endif %}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="div_inf_ender">
+        <div>
+          <div class="div_atributos">
+            <div class="form-group">
+              <label for="area">Área</label>
+              <input type="number" class="form-control" name="area" id="area" {% if imovel %} value="{{ imovel.area }}"
+              {% else %} value="0" {% endif %} step="0.01" required>
+            </div>
+
+            <div class="form-group">
+              <label for="banheiros">Banheiros</label>
+              <input type="number" class="form-control" name="banheiros" id="banheiros" {% if imovel %}
+                value="{{ imovel.banheiros }}" {% else %} value="0" {% endif %} required>
+            </div>
+
+            <div class="form-group">
+              <label for="vagas">Vagas</label>
+              <input type="number" class="form-control" name="vagas" id="vagas" {% if imovel %}
+                value="{{ imovel.vagas }}" {% else %} value="0" {% endif %} required>
+            </div>
+
+            <div class="form-group">
+              <label for="quartos">Quartos</label>
+              <input type="number" class="form-control" name="quartos" id="quartos" {% if imovel %}
+                value="{{ imovel.quartos }}" {% else %} value="0" {% endif %} required>
+            </div>
+
+            <div class="form-group">
+              <label for="suites">Suítes</label>
+              <input type="number" class="form-control" name="suites" id="suites" {% if imovel %}
+                value="{{ imovel.suites }}" {% else %} value="0" {% endif %} required>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="div_endereco">
+        <div class="container_endereco">
+          <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select class="form-select" name="tipo" id="tipo">
+              <option value="Apartamento" {% if imovel and imovel.tipo=='Apartamento' %} selected {% endif %}>
+                Apartamento
+              </option>
+              <option value="Casa" {% if imovel and imovel.tipo=='Casa' %} selected {% endif %}>Casa</option>
+              <option value="Terreno" {% if imovel and imovel.tipo=='Terreno' %} selected {% endif %}>Terreno</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="rua">CEP</label>
+            <input  type="text" class="form-control" name="cep" id="cep" {% if imovel %} value="{{imovel.cep}}" {% endif %} maxlength="9" required>
+            <div id="resultado"></div>
+          </div>
+          <div class="form-group btn_cep">
+            <button class="btn btn-primary" type="button" onclick="buscarCep()">Buscar</button>
+          </div>
+
+        </div>
+
+        <div class="container_endereco">
+          <div class="form-group">
+            <label for="rua">Rua</label>
+            <input type="text" class="form-control" name="rua" id="rua" {% if imovel %} value="{{ imovel.rua }}" {%
+              endif %} required>
+          </div>
+
+          <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" class="form-control" name="numero" id="numero" {% if imovel %}
+              value="{{ imovel.numero }}" {% endif %} required>
+          </div>
+        </div>
+
+        <div class="container_endereco">
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" class="form-control" name="bairro" id="bairro" {% if imovel %}
+              value="{{ imovel.bairro }}" {% endif %} required>
+          </div>
+
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" class="form-control" name="cidade" id="cidade" {% if imovel %}
+              value="{{ imovel.cidade }}" {% endif %} required>
+          </div>
+          <div class="form-group">
+            <label for="uf">UF</label>
+            <input type="text" class="form-control" name="uf" id="uf" {% if imovel %} value="{{ imovel.uf }}"
+            {% endif %} required>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="div_bnt_form">
+    <button  class="btn btn-primary btn-imoveis" onclick="envio_form()">
+      {% if imovel %}Salvar{% else %}Criar{% endif %}
+    </button>
+    <button c-reload=true type="button" class="btn btn-danger" id="btn_cancelar">Cancelar</button>
+  </div>
+
+</form>
+
+</div>
+
+{% if imovel %}
+<div class="div_imagens">
+  <h3>Imagens do imovel</h3>
+  <ul class="lista_imagens_cadastradas">
+    {% for file in files %}
+    <li id="{{codigo_imovel}}-{{file}}">
+      <img src="/static/imagens/cod_imoveis/{{imovel.pk}}/{{file}}" alt="">
+      <button class="btn btn-danger"
+        c-delete="{{ url_for('imoveis.deletar_imagem', pk_imovel=imovel.pk, file=file) }}"
+        c-remove-closest="li">Remover</button>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}

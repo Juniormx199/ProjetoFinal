@@ -1,0 +1,76 @@
+<div class="div_lista_imoveis">
+    <h2>Imóveis cadastrados</h2>
+    <ul class="lista_imoveis">
+        {% for imovel in imoveis_pagina %}
+            <li class="imovel-{{imovel.pk}} div_li_imovel">
+                <div class="div_carousel">
+                    <div id="carouselExample{{imovel.codigo}}" class="carousel  slide">
+
+
+                    <div id="div_imagem_lista" class="carousel-inner" c-container="{{url_for('imoveis.lista_imagens' , pk_imovel=imovel.pk)}}">
+       
+
+                    </div>
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample{{imovel.codigo}}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample{{imovel.codigo}}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                  </div>
+                </div>
+                <div class="div_imoveis_painel">
+                    <div>
+                        <h3>{{imovel.codigo}} - {{imovel.descricao}}</h3>
+                        <h5>Classificado: {{imovel.classificado}} - Inativo :  {{imovel.inativo}} {% if imovel.destaque == 'Sim'%} - Imovel em destaque {% endif %}</h5>
+                        <h4>
+                            {% if imovel.classificado == 'venda' or imovel.classificado == 'ambos'%}
+                                Venda : R$ {{imovel.valor_venda}}
+                            {% endif %}
+
+                            {% if imovel.classificado == 'locacao' or imovel.classificado == 'ambos'%}
+                                Locação : R$ {{imovel.valor_locacao}}
+                            {% endif %}
+                        </h4>
+                        <p>Valor Condominio: R$ {{imovel.valor_condominio}}</p>
+                        <p>{{imovel.rua}}, {{imovel.numero}} , {{imovel.bairro}} , {{imovel.cidade}} - {{imovel.uf}}</p>
+                        
+                        <div>
+                            <ul class="lista_imoveis_painel">
+                                <li><span class="material-symbols-outlined">bed</span> quartos : {{imovel.quartos}}</li>
+                                <li><span class="material-symbols-outlined">fullscreen</span> area : {{imovel.area}}</li>
+                                <li><span class="material-symbols-outlined">shower</span> banheiros : {{imovel.banheiros}}</li>
+                                <li><span class="material-symbols-outlined">directions_car</span> vagas : {{imovel.vagas}}</li>
+                                <li><span class="material-symbols-outlined">bathtub</span> suites : {{imovel.suites}}</li>
+                                <li>{{imovel.pk}}</li>          
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" c-delete="{{ url_for('imoveis.deletar' , pk_imovel=imovel.pk)}}" c-remove-closest="li" >Deletar</button>
+                        <button
+                        c-get="{{url_for('imoveis.form_edit_imoveis' , pk_imovel=imovel.pk)}}"
+                        c-target="#div_form_imoveis"
+                        class="btn btn-warning"
+                        ><a href="#form_imoveis">Editar</a></button>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="div_paginacao">
+        {% if pagina > 1 %}
+        <button class="btn btn-primary" c-get="{{url_for('imoveis.lista_imoveis',pagina=pagina-1)}}" c-target="#lista_imoveis">Voltar</button>
+    {% endif %}
+    <span>Pagina {{pagina}} de {{total_paginas}}</span>
+    {% if pagina < total_paginas %}
+        <button class="btn btn-primary" c-get="{{url_for('imoveis.lista_imoveis',pagina=pagina+1)}}" c-target="#lista_imoveis">Avancar</button>
+    {% endif %}
+    </div>
+
+</div>
+
+
