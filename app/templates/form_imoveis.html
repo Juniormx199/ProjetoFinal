@@ -54,10 +54,9 @@
             <div class="form-group">
               <label for="classificado">Classificado</label>
               <select class="form-select" name="classificado" id="classificado">
-                <option value="locacao" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Locação
+                <option value="locacao" {% if imovel and imovel.classificado=='locacao' %} selected {% endif %}>Locação
                 </option>
-                <option value="venda" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Venda</option>
-                <option value="ambos" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Ambos</option>
+                <option value="venda" {% if imovel and imovel.classificado=='venda' %} selected {% endif %}>Venda</option>
               </select>
             </div>
 
