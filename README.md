@@ -7,6 +7,7 @@ pip install flask flask-dropzone
 Execute o Script Principal:
 Após a instalação, inicie o seu site executando o script run.py. Use o comando:
 python run.py
+Após a execução, basta abrir o navegador e acessar http://127.0.0.1:5000/.
 
 Observação Importante:
 Ainda vamos fazendo alguns ajustes antes de lançar o site em produção. Estamos garantindo que tudo funcione perfeitamente e que a experiência do usuário seja excelente.
