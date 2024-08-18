@@ -1,0 +1,78 @@
+/* Estilos para o rodapé */
+footer {
+    margin-top: 50px;
+    background-image: url('/static/imagens/footer.png');
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: white;
+    padding: 50px;
+}
+
+footer li {
+    list-style: none;
+    margin-top: 5px;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Estilos para .footer_menu */
+.footer_menu {
+    list-style: none;
+    padding: 0;
+}
+
+.footer_menu li {
+    margin-bottom: 10px;
+}
+
+.footer_menu a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer_menu a:hover {
+    color: rgb(0, 0, 0);
+}
+
+/* Estilos para .footer_redes */
+.footer_redes {
+    margin: 10px 0;
+}
+
+.footer_redes a {
+    margin-right: 20px;
+}
+
+.footer_redes img {
+    width: 40px;
+}
+
+/* Estilos para .footer_contato */
+.footer_contato {
+    list-style: none;
+    padding: 0;
+}
+
+.footer_contato li {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    color: white;
+}
+
+.footer_contato img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+#logo_footer{
+    width: 300px;
+}

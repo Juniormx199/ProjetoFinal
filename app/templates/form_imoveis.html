@@ -1,12 +1,6 @@
-<form id="form_imoveis" 
-{% if imovel %} 
-   action="{{ url_for('imoveis.atualizar') }}" 
-{% else %} 
-  action="{{ url_for('imoveis.criar') }}" 
-{% endif %}
-method="POST"
->
-<input type="hidden" name="_method" value="{% if imovel %}PUT{% else %}POST{% endif %}">
+<form id="form_imoveis" {% if imovel %} action="{{ url_for('imoveis.atualizar') }}" {% else %}
+  action="{{ url_for('imoveis.criar') }}" {% endif %} method="POST">
+  <input type="hidden" name="_method" value="{% if imovel %}PUT{% else %}POST{% endif %}">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
@@ -21,20 +15,19 @@ method="POST"
         role="tab" aria-controls="contact-tab-pane" aria-selected="false">Endereço</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="comodidades-tab" data-bs-toggle="tab" data-bs-target="#comodidades" type="button" role="tab" aria-controls="comodidades" aria-selected="false">Comodidades</button>
+      <button class="nav-link" id="comodidades-tab" data-bs-toggle="tab" data-bs-target="#comodidades" type="button"
+        role="tab" aria-controls="comodidades" aria-selected="false">Comodidades</button>
     </li>
-    
+
   </ul>
   <div class="tab-content" id="myTabContent">
-    
+
     <div class="tab-pane fade" id="comodidades" role="tabpanel" aria-labelledby="comodidades-tab">
-      <div class="div_comodidades" 
-      {% if imovel %} c-container= "{{url_for('imoveis.form_comodidades' ,pk_imovel=imovel.pk)}}" {% else %}
-      c-container= "{{url_for('imoveis.form_comodidades')}}"
-      {% endif %}
-      >
+      <div class="div_comodidades" {% if imovel %}
+        c-container="{{url_for('imoveis.form_comodidades' ,pk_imovel=imovel.pk)}}" {% else %}
+        c-container="{{url_for('imoveis.form_comodidades')}}" {% endif %}>
       </div>
-   
+
     </div>
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
@@ -51,7 +44,8 @@ method="POST"
 
           <div class="div_inativo">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="Sim" id="destaque" name="destaque" {% if imovel and imovel.destaque == 'Sim' %} checked {% endif %}>
+              <input class="form-check-input" type="checkbox" value="Sim" id="destaque" name="destaque" {% if imovel and
+                imovel.destaque=='Sim' %} checked {% endif %}>
               <label class="form-check-label" for="destaque">
                 Imovel em dastaque
               </label>
@@ -60,9 +54,10 @@ method="POST"
             <div class="form-group">
               <label for="classificado">Classificado</label>
               <select class="form-select" name="classificado" id="classificado">
-                <option value="locacao" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Locação</option>
-                <option value="venda"  {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Venda</option>
-                <option value="ambos"  {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Ambos</option>
+                <option value="locacao" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Locação
+                </option>
+                <option value="venda" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Venda</option>
+                <option value="ambos" {% if imovel and imovel.classificado=='Sim' %} selected {% endif %}>Ambos</option>
               </select>
             </div>
 
@@ -86,19 +81,19 @@ method="POST"
           <div class="form-group">
             <label for="valor_locacao">Valor Locação</label>
             <input type="number" class="form-control" name="valor_locacao" id="valor_locacao" {% if imovel %}
-              value="{{ imovel.valor_locacao }}"{% else %} value="0"  {% endif %} step="1" required>
+              value="{{ imovel.valor_locacao }}" {% else %} value="0" {% endif %} step="1" required>
           </div>
 
           <div class="form-group">
             <label for="valor_venda">Valor Venda</label>
             <input type="number" class="form-control" name="valor_venda" id="valor_venda" {% if imovel %}
-              value="{{ imovel.valor_venda }}"{% else %} value="0"  {% endif %} step="1" required>
+              value="{{ imovel.valor_venda }}" {% else %} value="0" {% endif %} step="1" required>
           </div>
 
           <div class="form-group">
             <label for="valor_condominio">Valor Condominio</label>
             <input type="number" class="form-control" name="valor_condominio" id="valor_condominio" {% if imovel %}
-              value="{{ imovel.valor_condominio }}" {% else %}  value="0" {% endif %} step="1" required>
+              value="{{ imovel.valor_condominio }}" {% else %} value="0" {% endif %} step="1" required>
           </div>
 
         </div>
@@ -116,7 +111,7 @@ method="POST"
             <div class="form-group">
               <label for="area">Área</label>
               <input type="number" class="form-control" name="area" id="area" {% if imovel %} value="{{ imovel.area }}"
-              {% else %} value="0" {% endif %} step="0.01" required>
+                {% else %} value="0" {% endif %} step="0.01" required>
             </div>
 
             <div class="form-group">
@@ -161,7 +156,8 @@ method="POST"
           </div>
           <div class="form-group">
             <label for="rua">CEP</label>
-            <input  type="text" class="form-control" name="cep" id="cep" {% if imovel %} value="{{imovel.cep}}" {% endif %} maxlength="9" required>
+            <input type="text" class="form-control" name="cep" id="cep" {% if imovel %} value="{{imovel.cep}}" {% endif
+              %} maxlength="9" required>
             <div id="resultado"></div>
           </div>
           <div class="form-group btn_cep">
@@ -198,8 +194,8 @@ method="POST"
           </div>
           <div class="form-group">
             <label for="uf">UF</label>
-            <input type="text" class="form-control" name="uf" id="uf" {% if imovel %} value="{{ imovel.uf }}"
-            {% endif %} required>
+            <input type="text" class="form-control" name="uf" id="uf" {% if imovel %} value="{{ imovel.uf }}" {% endif
+              %} required>
           </div>
         </div>
 
@@ -210,7 +206,7 @@ method="POST"
 
 
   <div class="div_bnt_form">
-    <button  class="btn btn-primary btn-imoveis" onclick="envio_form()">
+    <button class="btn btn-primary btn-imoveis" onclick="envio_form()">
       {% if imovel %}Salvar{% else %}Criar{% endif %}
     </button>
     <button c-reload=true type="button" class="btn btn-danger" id="btn_cancelar">Cancelar</button>
@@ -227,8 +223,7 @@ method="POST"
     {% for file in files %}
     <li id="{{codigo_imovel}}-{{file}}">
       <img src="/static/imagens/cod_imoveis/{{imovel.pk}}/{{file}}" alt="">
-      <button class="btn btn-danger"
-        c-delete="{{ url_for('imoveis.deletar_imagem', pk_imovel=imovel.pk, file=file) }}"
+      <button class="btn btn-danger" c-delete="{{ url_for('imoveis.deletar_imagem', pk_imovel=imovel.pk, file=file) }}"
         c-remove-closest="li">Remover</button>
     </li>
     {% endfor %}

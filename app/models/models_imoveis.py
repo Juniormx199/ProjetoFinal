@@ -1,5 +1,4 @@
 import sqlite3
-import logging
 
 db = sqlite3.connect("app/db/contalcred.db" , check_same_thread=False)
 
@@ -257,10 +256,11 @@ def busca_imoveis_filtro(**filtros):
         condicoes.append('suites = ?')
         parametros.append(filtros['suites'])
 
-    if filtros['classificado'] == 'locacao':
-        valor_campo = 'valor_locacao'
-    else:
-        valor_campo = 'valor_venda'
+    if 'classificado' in filtros:
+        if filtros['classificado'] == 'locacao':
+            valor_campo = 'valor_locacao'
+        else:
+            valor_campo = 'valor_venda'
 
     if 'valor_min' in filtros:
         condicoes.append(f'{valor_campo} >= ?')

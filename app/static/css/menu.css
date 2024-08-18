@@ -1,0 +1,104 @@
+/* Estilos para .div_contato e elementos relacionados */
+.div_contato {
+    background-color: #112E40;
+    padding: 10px;
+}
+
+.div_contato img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.header_contato {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.header_contato li {
+    list-style: none;
+    padding-left: 10px;
+    color: white;
+}
+
+/* Estilos para .header_principal e elementos relacionados */
+.header_principal,
+.div_central,
+.div_main {
+    max-width: 1280px;
+    margin: auto auto;
+}
+
+.container_header {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.container_header img {
+    height: 60px;
+}
+
+#icone_menu {
+    text-align: center;
+    height: 25px;
+    align-self: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#menu {
+    display: none;
+}
+
+#menu a {
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: black;
+    padding: 8px;
+    font-weight: bold;
+}
+
+#menu li {
+    list-style: none;
+}
+
+@media screen and (min-width: 768px) {
+    #menu {
+        display: block;
+    }
+    
+    #icone_menu {
+        display: none;
+    }
+
+    .main_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #menu ul {
+        display: flex;
+    }
+
+    #menu a {
+        padding: 20px 10px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    #menu a:hover {
+        border-bottom: 3px solid rgb(85, 85, 255);
+    }
+}
+
+.div_central {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}

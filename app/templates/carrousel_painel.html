@@ -1,7 +1,9 @@
 {% for file in files %}
-  <div class="carousel-item {% if loop.first %}active{% endif %}">
-    <div class="d-flex justify-content-center">
-      <a data-fancybox="gallery{{ pk_imovel }}" href="/static/imagens/cod_imoveis/{{ pk_imovel }}/{{ file }}"><img id="imagem_detalhe" src="/static/imagens/cod_imoveis/{{ pk_imovel }}/{{ file }}" class="d-block" alt="Slide"></a>
-    </div>
+<div class="carousel-item {% if loop.first %}active{% endif %}">
+  <div class="d-flex justify-content-center">
+    <a data-fancybox="gallery{{ pk_imovel }}" href="/static/imagens/cod_imoveis/{{ pk_imovel }}/{{ file }}"><img
+        id="imagem_detalhe" src="/static/imagens/cod_imoveis/{{ pk_imovel }}/{{ file }}" class="d-block"
+        alt="Slide"></a>
   </div>
+</div>
 {% endfor %}

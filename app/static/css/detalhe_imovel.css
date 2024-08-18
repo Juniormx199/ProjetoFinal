@@ -1,21 +1,86 @@
-
-.informacoes_imovel{
+.informacoes_imovel {
     border: solid 1px black;
     padding: 30px;
-    border-radius:8px;
+    border-radius: 8px;
 }
 
 
-.container_imovel{
+.container_imovel {
     border: solid 1px black;
     padding: 30px;
-    border-radius:8px;
+    border-radius: 8px;
 }
 
-li{
+li {
     list-style: none;
 }
 
-body{
+body {
     background-color: #f8f8f8;
+}
+
+
+#imagem_detalhe,
+#carousel_detalhe,
+#div_imagem_lista{
+    width: 100%;
+    height:auto;
+    max-height: 600px;
+    object-fit: cover;
+}
+
+.div_carousel {
+    background-color: rgba(0, 0, 0, 0.055);
+}
+
+.container_inf_imovel {
+    width: 70%;
+    background-color: white;
+}
+
+.fale_conosco {
+    border: 1px solid black;
+}
+
+.contato_fale_conosco {
+    border: 1px solid black;
+}
+
+.container_principal_inf {
+    display: flex;
+}
+
+.comodidades_detalhe ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.comodidades_detalhe ul li{
+    display: flex;
+    margin-right: 10px;
+}
+
+.container_inf {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+
+.card {
+    box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.26);
+}
+
+.valor_detalhes{
+    padding-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .container_inf {
+    padding: 10px 0;
+    }
+    
 }

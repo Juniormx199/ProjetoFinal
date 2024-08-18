@@ -10,9 +10,12 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <link rel="stylesheet" href="/static/css/menu.css">
+  <link rel="stylesheet" href="/static/css/footer.css">
+  <link rel="stylesheet" href="/static/css/painel_imoveis.css">
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
   {{ dropzone.load_css() }}
   {{ dropzone.style('border: 2px dashed #0087F7; margin: 10px 0 10px;') }}
 </head>
@@ -26,7 +29,7 @@
         <h3>Cadastro de imóvel</h3>
       </div>
       <div c-container="{{url_for('imoveis.form_imoveis')}}" id="div_form_imoveis">
-        
+
       </div>
 
       <div class="zone">
@@ -47,7 +50,7 @@
 
     </div>
   </main>
-  
+
   <footer c-container="{{url_for('home.footer')}}"></footer>
   <script src="/static/js/script.js"></script>
   <script src="/static/js/cru.js"></script>
@@ -83,72 +86,72 @@
     }
 
     function envio_form() {
-  var form = document.getElementById('form_imoveis');
-  
-  form.removeEventListener('submit', envio_formHandler);
+      var form = document.getElementById('form_imoveis');
 
-  form.addEventListener('submit', envio_formHandler);
-}
+      form.removeEventListener('submit', envio_formHandler);
 
-async function envio_formHandler(evento) {
-  evento.preventDefault(); 
-  const form = document.getElementById('form_imoveis');
-  const method = form.querySelector('input[name="_method"]').value.toUpperCase();
-  const len_imagens = myDropzone.files.length;   
+      form.addEventListener('submit', envio_formHandler);
+    }
 
-  const formData = new FormData(form);
-  const data = {};
-  formData.forEach((value, key) => {
-    data[key] = value;
-  });
+    async function envio_formHandler(evento) {
+      evento.preventDefault();
+      const form = document.getElementById('form_imoveis');
+      const method = form.querySelector('input[name="_method"]').value.toUpperCase();
+      const len_imagens = myDropzone.files.length;
 
-  if (len_imagens <= 0) {
-    if (method === 'POST') {
-      alert('Adiciona uma imagem aí, parceiro!');
-      return;
-    } else {
-      try {
-        var pk_imovel = document.getElementById('pk').value;
-        const resultado = await verifica_preenchimento_imagens(pk_imovel);
-        if (resultado.quantidade == 0) {
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      if (len_imagens <= 0) {
+        if (method === 'POST') {
           alert('Adiciona uma imagem aí, parceiro!');
           return;
+        } else {
+          try {
+            var pk_imovel = document.getElementById('pk').value;
+            const resultado = await verifica_preenchimento_imagens(pk_imovel);
+            if (resultado.quantidade == 0) {
+              alert('Adiciona uma imagem aí, parceiro!');
+              return;
+            }
+          } catch (error) {
+            console.error('Erro ao verificar preenchimento das imagens:', error);
+            return;
+          }
         }
+      }
+
+      try {
+        const res = await fetch(form.action, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const responseData = await res.json();
+        document.getElementById('pk').value = responseData.pk;
+
+
+        myDropzone.processQueue();
+        if (method == 'POST') {
+          alert('Imovel cadastrado com sucesso!!!')
+        } else {
+          alert('Imovel atualizado com sucesso!!!')
+        }
+        window.location.reload()
       } catch (error) {
-        console.error('Erro ao verificar preenchimento das imagens:', error);
-        return; 
+        console.error('Erro ao enviar o formulário:', error);
       }
     }
-  }
-
-  try {
-    const res = await fetch(form.action, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify(data) 
-    });
-
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const responseData = await res.json();
-    document.getElementById('pk').value = responseData.pk;
-    
-
-    myDropzone.processQueue();
-    if(method == 'POST'){
-      alert('Imovel cadastrado com sucesso!!!')
-    }else{
-      alert('Imovel atualizado com sucesso!!!')
-    }
-    window.location.reload()
-  } catch (error) {
-    console.error('Erro ao enviar o formulário:', error);
-  }
-}
 
     const botao = document.getElementById('filtro_btn');
     botao.addEventListener("click", function (event) {
@@ -160,7 +163,7 @@ async function envio_formHandler(evento) {
 
     botao.click();
 
-   
+
     document.getElementById('removeAll').addEventListener('click', function () {
       myDropzone.removeAllFiles(true);
     });

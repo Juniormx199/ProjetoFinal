@@ -1,67 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ContalCred</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
+    <link rel="stylesheet" href="/static/css/menu.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <style>
+        @media (max-width: 768px) {
+
+            .div_carousel,
+            .carousel-pequeno {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header c-container="{{ url_for('home.header') }}">
-    </header>
+    <header c-container="{{ url_for('home.header') }}"> </header>
     <div class="container_pesquisa">
         <div class="pesquisa_principal">
             <dav class="lista_pesquisa">
-                <input type="radio" id="locacao_venda1" name="contact" value="locacao" checked/>
-                <label for="locacao_venda1">Locação</label>
-                <input type="radio" id="locacao_venda2" name="contact" value="venda" />
-                <label for="locacao_venda2">Venda</label>
+                <input type="radio" id="locacao" name="classificado" value="locacao" checked />
+                <label for="locacao">Locação</label>
+                <input type="radio" id="venda" name="classificado" value="venda" />
+                <label for="venda">Venda</label>
             </dav>
-            <div class="pesquisa_div">
-                <select name="" id="">
-                    <option value="">Tipo</option>
-                    <option value="">Apartamento</option>
-                    <option value="">Casa</option>
-                    <option value="">Terreno</option>
-                </select>
-                <select>
-                    <option value="todas-cidades">Todas as cidades</option>
-                    <option value="bom-despacho">Bom Despacho-MG</option>
-                </select>
-                <select>
-                    <option value="todos-bairros">Todos os bairros</option>
-                    <option value="sao-jose">São José</option>
-                    <option value="centro">Centro</option>
-                </select>
-                <select>
-                    <option value="ate-400k">Até 400.000</option>
-                    <option value="400k-600k">De 400.000 até 600.000</option>
-                    <option value="600k-800k">De 600.000 até 800.000</option>
-                    <option value="800k-1m">De 800.000 até 1.000.000</option>
-                </select>
-                <select>
+            <div class="pesquisa_div d-flex flex-wrap align-items-center gap-2">
+                <div class="d-flex flex-wrap gap-2">
+                    <input type="checkbox" class="btn-check" name="tipo_filtro" id="apartamento" value="Apartamento" {%
+                        if tipo_filtro=='Apartamento' %} checked {% endif %} autocomplete="off">
+                    <label class="btn btn-outline-primary" for="apartamento">Apartamento</label>
+
+                    <input type="checkbox" class="btn-check" name="tipo_filtro" id="casa" value="Casa" {% if
+                        tipo_filtro=='Casa' %} checked {% endif %} autocomplete="off">
+                    <label class="btn btn-outline-primary" for="casa">Casa</label>
+
+                    <input type="checkbox" class="btn-check" name="tipo_filtro" id="terreno" value="Terreno"
+                        autocomplete="off">
+                    <label class="btn btn-outline-primary" for="terreno">Terreno</label>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <input type="text" id="valor_min" name="valor_min" class="form-control" placeholder="Valor Mínimo">
+                    <input type="text" id="valor_max" name="valor_max" class="form-control" placeholder="Valor Máximo">
+                </div>
+
+                <select id="quartos" class="form-select">
                     <option value="">Quartos</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4+</option>
                 </select>
-                <input type="button" value="Buscar" id="button_buscar">
+
+                <button type="button" class="btn btn-primary" id="button_buscar" onclick="filtrar()">Buscar</button>
             </div>
+
+
         </div>
-    
     </div>
     <main>
         <div>
-            <h2 class="titulo_destaque">Imóveis em destaque</h2>
-            <div c-container="{{url_for('home.imoveis')}}">
+            <div class="div_titulo_destaque" id="ancora_destaques">
+                <h2>Imóveis em destaque</h2>
+                <h6>Os imóveis mais procurados na cidade estão aqui!</h6>
+            </div>
+
+            <h3 class="titulo">Venda</h3>
+            <div class="multiple-items">
+
+                {% for imovel_venda in imoveis_venda %}
+                <div class="container_card">
+                    <div class="card" style="width: 22rem;">
+                        <div class="card-img-top">
+                            <div class="div_carousel">
+                                <div class="classificado_lista">
+                                    {% if imovel_venda.classificado == 'venda'%}
+                                    Venda
+                                    {% endif %}
+                                </div>
+                                <div class="tipo_lista">
+                                    {{imovel_venda.tipo}}
+                                </div>
+                                <div id="carouselExample{{imovel_venda.codigo}}" class="carousel  slide">
+
+
+                                    <div id="div_imagem_lista" class="carousel-inner"
+                                        c-container="{{url_for('imoveis.lista_imagens' , pk_imovel=imovel_venda.pk)}}">
+
+
+                                    </div>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample{{imovel_venda.codigo}}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample{{imovel_venda.codigo}}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="/imoveis/buscar?codigo={{imovel_venda.codigo}}">
+                                <h4>{{imovel_venda.descricao}}</h4>
+                            </a>
+                            <p>{{imovel_venda.bairro}}, {{imovel_venda.cidade}}</p>
+                            <ul class="inf_imoveis">
+                                <li>
+                                    <span class="material-symbols-outlined">fullscreen</span>
+                                    <p>{{imovel_venda.area}}</p>
+                                </li>
+                                <li>
+                                    <span class="material-symbols-outlined">bed</span>
+                                    <p>{{imovel_venda.quartos}} quartos</p>
+                                </li>
+                                <li>
+                                    <span class="material-symbols-outlined">directions_car</span>
+                                    <p>{{imovel_venda.vagas}} Vagas</p>
+                                </li>
+                            </ul>
+                            <div class="div_valor_destaques">
+
+                                <h4>
+                                    Valor : R$ {{imovel_venda.valor_venda}}
+                                </h4>
+                                <button class="btn btn-primary"><a
+                                        href="/imoveis/buscar?codigo={{imovel_venda.codigo}}">Ver Detalhes</a></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <h3 class="titulo">Locação</h3>
+            <div class="multiple-items">
+                {% for imovel_locacao in imoveis_locacao %}
+                <div class="container_card">
+                    <div class="card" style="width: 22rem;">
+                        <div class="card-img-top">
+                            <div class="div_carousel">
+                                <div class="classificado_lista">
+                                    {% if imovel_locacao.classificado == 'locacao'%}
+                                    Locação
+                                    {% endif %}
+                                </div>
+                                <div class="tipo_lista">
+                                    {{imovel_locacao.tipo}}
+                                </div>
+                                <div id="carouselExample{{imovel_locacao.codigo}}" class="carousel  slide">
+
+
+                                    <div id="div_imagem_lista" class="carousel-inner"
+                                        c-container="{{url_for('imoveis.lista_imagens' , pk_imovel=imovel_locacao.pk)}}">
+
+
+                                    </div>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExample{{imovel_locacao.codigo}}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExample{{imovel_locacao.codigo}}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <a href="/imoveis/buscar?codigo={{imovel_locacao.codigo}}">
+                                <h4>{{imovel_locacao.descricao}}</h4>
+                            </a>
+                            <p>{{imovel_locacao.bairro}}, {{imovel_locacao.cidade}}</p>
+                            <p>codigo: {{imovel_locacao.codigo}}</p>
+                            <ul class="inf_imoveis">
+                                <li>
+                                    <span class="material-symbols-outlined">fullscreen</span>
+                                    <p>{{imovel_locacao.area}}</p>
+                                </li>
+                                <li>
+                                    <span class="material-symbols-outlined">bed</span>
+                                    <p>{{imovel_locacao.quartos}} quartos</p>
+                                </li>
+                                <li>
+                                    <span class="material-symbols-outlined">directions_car</span>
+                                    <p>{{imovel_locacao.vagas}} Vagas</p>
+                                </li>
+                            </ul>
+
+                            <div class="div_valor_destaques">
+
+                                <h4>
+                                    Valor : R${{imovel_locacao.valor_locacao}}
+                                </h4>
+                                <button class="btn btn-primary"><a
+                                        href="/imoveis/buscar?codigo={{imovel_locacao.codigo}}">Ver
+                                        Detalhes</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
             </div>
         </div>
+        <div class="options-container">
+            <h2 class="titulo">O que você esta procurando?</h2>
+            <div class="options">
+
+                <a class="option" href="{{url_for('imoveis.form_filtro' , tipo_filtro='Casa')}}">
+                    <span class="material-symbols-outlined">
+                        home
+                    </span>
+                    <span>CASAS</span>
+                </a>
+                <a class="option" href="{{url_for('imoveis.form_filtro' , tipo_filtro='Apartamento')}}">
+                    <span class="material-symbols-outlined">
+                        apartment
+                    </span>
+                    <span>APARTAMENTOS</span>
+                </a>
+                <a class="option" href="{{url_for('imoveis.form_filtro' , classificado='venda')}}">
+                    <span class="material-symbols-outlined">
+                        real_estate_agent
+                    </span>
+                    <span>COMPRAR</span>
+                </a>
+                <a class="option" href="{{url_for('imoveis.form_filtro' , classificado='locacao')}}">
+                    <span class="material-symbols-outlined">
+                        contract_edit
+                    </span>
+                    <span>ALUGAR</span>
+                </a>
+            </div>
+        </div>
+        <h2 class="titulo" id="ancora_contato">Nossa equipe</h2>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/static/imagens/teste.jpg" class="card-img-top" alt="Membro da equipe 1">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Célio Mendes</h5>
+                            <p class="card-text">Função do Membro 1</p>
+                            <p class="card-text">Entre em contato : (37) 99925-5435</p>
+                            <button onclick="whatsapp('5537999255435')" class="btn btn-primary mb-2">Conversar no
+                                WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/static/imagens/equipe2.jpg" class="card-img-top" alt="Membro da equipe 2">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">João Vitor</h5>
+                            <p class="card-text">Função do Membro 2</p>
+                            <p class="card-text">Entre em contato : (37) 99856-4880</p>
+                            <button onclick="whatsapp('5537998564880')" class="btn btn-primary mb-2">Conversar no
+                                WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card">
+                        <img src="/static/imagens/equipe3.avif" class="card-img-top" alt="Membro da equipe 3">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Contalcred</h5>
+                            <p class="card-text">Função do Membro 3</p>
+                            <p class="card-text">Entre em contato : (37) 3522-7660</p>
+                            <button onclick="whatsapp('553735227660')" class="btn btn-primary mb-2">Conversar no
+                                WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="titulo_form_filtro">Anuncie seu imóvel conosco!<button onclick="whatsapp()"
+                class="btn btn-primary mb-2">Anunciar Agora</button></div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.multiple-items').slick({
+                infinite: false,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                arrows: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: true,
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            dots: true,
+                            centerMode: true,
+                            centerPadding: '10px'
+                        }
+                    }
+                ]
+            });
+        });
+
+        function filtrar() {
+            const classificado = document.querySelector('input[name="classificado"]:checked').value;
+
+            const tipoFiltroNodes = document.querySelectorAll('input[name="tipo_filtro"]:checked');
+            const tipoFiltroValues = Array.from(tipoFiltroNodes).map(input => input.value);
+
+            const valor_min = document.getElementById('valor_min').value;
+            const valor_max = document.getElementById('valor_max').value;
+            const quartos = document.getElementById("quartos").value;
+
+            var params = new URLSearchParams();
+
+            if (classificado) {
+                params.append('classificado', classificado);
+            }
+
+            if (tipoFiltroValues) {
+                tipoFiltroValues.forEach(value => {
+                    params.append('tipo_filtro', value);
+                });
+            }
+
+            if (quartos) {
+                params.append('quartos', quartos);
+            }
+
+            if (valor_min) {
+                params.append('valor_min', valor_min);
+            }
+
+            if (valor_max) {
+                params.append('valor_max', valor_max);
+            }
+            const url = `{{ url_for('imoveis.form_filtro') }}?${params.toString()}`;
+
+            window.location.href = url
+        }
+
+        function whatsapp(numero) {
+            var mensagem = 'Olá! Gostaria de mais informações.';
+            var url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+            window.open(url, '_blank');
+        }
+
+    </script>
     <script src="/static/js/script.js"></script>
-    <script src="/static/js/cru.js"></script>   
+    <script src="/static/js/cru.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
 </body>
 <footer c-container="{{url_for('home.footer')}}">
 </footer>
+
 </html>

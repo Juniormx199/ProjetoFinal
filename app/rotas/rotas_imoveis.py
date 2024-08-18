@@ -4,15 +4,8 @@ from app import app
 from flask_dropzone import Dropzone
 from flask import jsonify
 import os
-import logging
 import shutil
-
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Configuração do logging
-logging.basicConfig(level=logging.DEBUG)  # Define o nível de log como DEBUG
-logger = logging.getLogger(__name__)
+import ast
 
 basedir = os.path.abspath(os.path.dirname('__main__'))
 
@@ -158,8 +151,6 @@ def atualizar():
             destaque=destaque, classificado=classificado, inativo=inativo, cep=cep, uf=uf
         )
 
-        #logging.debug(f"Dados recebidos - tipo: {imovel.pk}, codigo: {imovel.codigo}, valor_locacao: {imovel.valor_locacao}, valor_venda: {imovel.valor_venda}, valor_condominio: {imovel.valor_condominio}, informacoes: {imovel.informacoes}, descricao: {imovel.descricao}, rua: {imovel.rua}, bairro: {imovel.bairro}, numero: {imovel.numero}, cidade: {imovel.cidade}, area: {imovel.area}, quartos: {imovel.quartos}, banheiros: {imovel.banheiros}, vagas: {imovel.vagas}, suites: {imovel.suites}, destaque: {imovel.destaque}, classificado: {imovel.classificado}, inativo: {imovel.inativo}, cep: {imovel.cep}, uf: {imovel.uf}")
-        
         update_imovel(imovel , comodidades)
         return {'pk': pk}
 
@@ -278,7 +269,14 @@ def quantidade_imagens():
 
 @blueprint_imoveis.route('/imoveis/filtros')
 def form_filtro():
-    return render_template('form_filtro.html')
+    classificado = request.args.get('classificado','')
+    tipo_filtro= request.args.getlist('tipo_filtro')
+    quartos = request.args.get('quartos','')
+    valor_min = request.args.get('valor_min','')
+    valor_max = request.args.get('valor_max','')
+
+    return render_template('form_filtro.html' , classificado=classificado , tipo_filtro=tipo_filtro ,quartos=quartos ,valor_min=valor_min , valor_max=valor_max)
+
 
 
 @blueprint_imoveis.route('/imoveis/filtro')
@@ -290,9 +288,20 @@ def buscar_imoveis():
         if imovel:
             return render_template('lista_imoveis_filtro.html', imoveis_pagina=[imovel], total_paginas=1, pagina=1)
 
-    classificado = request.args.get('classificado', 'locacao')
+
+    classificado = request.args.get('classificado', '')
     tipo_filtro = request.args.getlist('tipo_filtro')
-    quartos = request.args.get('quartos', '')
+
+    tipo_filtro_simples = request.args.get('tipo_simples')
+
+    if tipo_filtro:
+        tipo = tipo_filtro
+    elif tipo_filtro_simples:
+        tipo = ast.literal_eval(tipo_filtro_simples)
+    else:
+        tipo =''
+
+    quartos = request.args.get('quartos')
     banheiros = request.args.get('banheiros', '')
     vagas = request.args.get('vagas', '')
     suites = request.args.get('suites', '')
@@ -301,7 +310,7 @@ def buscar_imoveis():
 
     filtros = {
         'classificado': classificado,
-        'tipo': tipo_filtro,
+        'tipo': tipo,
         'quartos': quartos,
         'banheiros': banheiros,
         'vagas': vagas,
@@ -311,12 +320,11 @@ def buscar_imoveis():
     }
 
     filtros = {key: valor for key, valor in filtros.items() if valor}
-
-    logging.debug(f"filtro nao vazios : {filtros} ")
     
     imoveis = busca_imoveis_filtro(**filtros)
+    quantidade_encontrada = len(imoveis)
 
-    pagina = request.args.get('pagina', 1, type=int)
+    pagina = request.args.get('pagina',1,type=int)
     quantidade_pagina = 5
     inicio = (pagina - 1) * quantidade_pagina
     final = inicio + quantidade_pagina
@@ -324,7 +332,7 @@ def buscar_imoveis():
     imoveis_pagina = imoveis[inicio:final]
 
 
-    return render_template('lista_imoveis_filtro.html', imoveis_pagina=imoveis_pagina, total_paginas=total_paginas, pagina=pagina)
+    return render_template('lista_imoveis_filtro.html', imoveis_pagina=imoveis_pagina, total_paginas=total_paginas, pagina=pagina , quantidade_encontrada=quantidade_encontrada)
 
 
 
@@ -340,3 +348,7 @@ def detalhe_imovel_comodidades():
     pk_imovel = request.args.get('pk_imovel')
     comodidades = obter_comodidades_sim(pk_imovel)
     return render_template('comodidades_detalhe.html' , comodidades=comodidades)
+
+
+
+

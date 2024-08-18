@@ -6,61 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filtro de Imóveis</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-    <style>
-        .btn-check:checked + .btn {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-check:focus + .btn, .btn:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-   
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/static/css/menu.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/form_filtro.css">
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
-        a h3{
-            color: black;
-        }
-
-        a h3:hover{
-            color: #0056b3;
-        }
-        .container_titulo_imovel{
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            padding-right: 15px;
-        }
-        .classificado_lista{
-            background-color:#0056b3;
-            width: 70px;
-            padding: 7px;
-            color: white;
-            position: absolute;
-            z-index: 1;
-            border-radius: 0 5px 5px 0;
-        }
-    </style>
 </head>
 
 <body>
     <header c-container="{{ url_for('home.header') }}"></header>
+    <div class="titulo_form_filtro">Encontre o imóvel ideal para você</div>
     <main class="container_main">
         <div>
-            <form id="filtroForm" action="{{url_for('imoveis.buscar_imoveis')}}">
 
+            <form id="filtroForm" action="{{url_for('imoveis.buscar_imoveis')}}">
                 <div class="mb-3">
                     <label for="classificado" class="form-label">Classificado</label>
                     <div>
-                        <input type="radio" class="btn-check" name="classificado" id="locacao" value="locacao" checked autocomplete="off">
+                        <input type="radio" class="btn-check" name="classificado" id="locacao" value="locacao" {% if
+                            classificado=='locacao' %} checked {% endif %} autocomplete="off">
                         <label class="btn btn-outline-primary" for="locacao">Locação</label>
 
-                        <input type="radio" class="btn-check" name="classificado" id="venda" value="venda" autocomplete="off">
+                        <input type="radio" class="btn-check" name="classificado" id="venda" value="venda" {% if
+                            classificado=='venda' %} checked {% endif %} autocomplete="off">
                         <label class="btn btn-outline-primary" for="venda">Venda</label>
                     </div>
                 </div>
@@ -68,13 +42,16 @@
                 <div class="mb-3">
                     <label for="tipo_filtro" class="form-label">Tipo de Imóvel</label>
                     <div>
-                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="apartamento" value="Apartamento" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="apartamento" value="Apartamento"
+                            {% if tipo_filtro=='Apartamento' %} checked {% endif %} autocomplete="off">
                         <label class="btn btn-outline-primary" for="apartamento">Apartamento</label>
 
-                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="casa" value="Casa" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="casa" value="Casa" {% if
+                            tipo_filtro=='Casa' %} checked {% endif %} autocomplete="off">
                         <label class="btn btn-outline-primary" for="casa">Casa</label>
 
-                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="terreno" value="Terreno" autocomplete="off">
+                        <input type="checkbox" class="btn-check" name="tipo_filtro" id="terreno" value="Terreno"
+                            autocomplete="off">
                         <label class="btn btn-outline-primary" for="terreno">Terreno</label>
                     </div>
                 </div>
@@ -100,72 +77,113 @@
                         <label class="btn btn-outline-primary" for="quartos4">4+</label>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Banheiros</label>
-                    <div>
-                        <input type="radio" class="btn-check" name="banheiros" id="banheiros1" value="1" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="banheiros1">1</label>
-
-                        <input type="radio" class="btn-check" name="banheiros" id="banheiros2" value="2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="banheiros2">2</label>
-
-                        <input type="radio" class="btn-check" name="banheiros" id="banheiros3" value="3" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="banheiros3">3</label>
-
-                        <input type="radio" class="btn-check" name="banheiros" id="banheiros4" value="4" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="banheiros4">4+</label>
+                <label for="valor_min" class="form-label">Valor</label>
+                <div class="div_valor_filtro">
+                    <div class="mb-3">
+                        <input type="text" id="valor_min" name="valor_min" class="form-control" placeholder="Mínimo">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" id="valor_max" name="valor_max" class="form-control" placeholder="Máximo">
                     </div>
                 </div>
+                <section>
+                    <details>
+                        <summary>Mais Filtros</summary>
+                        <div class="mb-3">
+                            <label class="form-label">Banheiros</label>
+                            <div>
+                                <input type="radio" class="btn-check" name="banheiros" id="banheiros1" value="1"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="banheiros1">1</label>
 
-                <div class="mb-3">
-                    <label class="form-label">Vagas</label>
-                    <div>
-                        <input type="radio" class="btn-check" name="vagas" id="vagas1" value="1" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="vagas1">1</label>
+                                <input type="radio" class="btn-check" name="banheiros" id="banheiros2" value="2"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="banheiros2">2</label>
 
-                        <input type="radio" class="btn-check" name="vagas" id="vagas2" value="2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="vagas2">2</label>
+                                <input type="radio" class="btn-check" name="banheiros" id="banheiros3" value="3"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="banheiros3">3</label>
 
-                        <input type="radio" class="btn-check" name="vagas" id="vagas3" value="3" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="vagas3">3</label>
+                                <input type="radio" class="btn-check" name="banheiros" id="banheiros4" value="4"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="banheiros4">4</label>
+                            </div>
+                        </div>
 
-                        <input type="radio" class="btn-check" name="vagas" id="vagas4" value="4" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="vagas4">4+</label>
-                    </div>
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Vagas</label>
+                            <div>
+                                <input type="radio" class="btn-check" name="vagas" id="vagas1" value="1"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="vagas1">1</label>
 
-                <div class="mb-3">
-                    <label class="form-label">Suítes</label>
-                    <div>
-                        <input type="radio" class="btn-check" name="suites" id="suites1" value="1" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="suites1">1</label>
+                                <input type="radio" class="btn-check" name="vagas" id="vagas2" value="2"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="vagas2">2</label>
 
-                        <input type="radio" class="btn-check" name="suites" id="suites2" value="2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="suites2">2</label>
+                                <input type="radio" class="btn-check" name="vagas" id="vagas3" value="3"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="vagas3">3</label>
 
-                        <input type="radio" class="btn-check" name="suites" id="suites3" value="3" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="suites3">3</label>
+                                <input type="radio" class="btn-check" name="vagas" id="vagas4" value="4"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="vagas4">4</label>
+                            </div>
+                        </div>
 
-                        <input type="radio" class="btn-check" name="suites" id="suites4" value="4" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="suites4">4+</label>
-                    </div>
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Suítes</label>
+                            <div>
+                                <input type="radio" class="btn-check" name="suites" id="suites1" value="1"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="suites1">1</label>
 
-                <div class="mb-3">
-                    <label for="valor_min" class="form-label">Valor</label>
-                    <input type="text" id="valor_min" name="valor_min" class="form-control" placeholder="Mínimo">
-                </div>
-                <div class="mb-3">
-                    <input type="text" id="valor_max" name="valor_max" class="form-control" placeholder="Máximo">
-                </div>
+                                <input type="radio" class="btn-check" name="suites" id="suites2" value="2"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="suites2">2</label>
 
-                <button id="filtrar" class="btn btn-primary" c-target="#lista_imoveis_filtro">Buscar</button>
+                                <input type="radio" class="btn-check" name="suites" id="suites3" value="3"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="suites3">3</label>
+
+                                <input type="radio" class="btn-check" name="suites" id="suites4" value="4"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="suites4">4</label>
+                            </div>
+                        </div>
+                    </details>
+                    <section>
+
+                        <button id="filtrar" class="btn btn-primary" c-target="#lista_imoveis_filtro">Buscar</button>
             </form>
         </div>
-        <div c-container="{{url_for('imoveis.buscar_imoveis')}}" id="lista_imoveis_filtro">
+        {% set params = [] %}
 
+        {% if classificado %}
+        {% set _ = params.append('classificado=' ~ classificado) %}
+        {% endif %}
+
+        {% if tipo_filtro %}
+        {% set _ = params.append('tipo_simples=' ~ tipo_filtro) %}
+        {% endif %}
+
+        {% if quartos %}
+        {% set _ = params.append('quartos=' ~ quartos) %}
+        {% endif %}
+
+        {% if valor_min %}
+        {% set _ = params.append('valor_min=' ~ valor_min) %}
+        {% endif %}
+
+        {% if valor_max %}
+        {% set _ = params.append('valor_max=' ~ valor_max) %}
+        {% endif %}
+
+        {% set query_string = params | join('&') %}
+        {% set url = url_for('imoveis.buscar_imoveis') %}
+        <div c-container="{{ url }}?{{ query_string }}" id="lista_imoveis_filtro">
         </div>
+
     </main>
     <footer c-container="{{url_for('home.footer')}}"></footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -181,7 +199,7 @@
     <script src="/static/js/cru.js"></script>
     <script>
         const botao = document.getElementById('filtrar');
-        botao.addEventListener("click", function(event) {
+        botao.addEventListener("click", function (event) {
             event.preventDefault();
             const form = document.getElementById('filtroForm');
             const formData = new FormData(form);

@@ -6,17 +6,22 @@ blueprint_home = Blueprint('home',__name__)
 
 @blueprint_home.route('/')
 def home():
-    return render_template('base.html')
+    imoveis_venda = [imovel for imovel in get_all_imoveis() 
+            if (imovel.inativo != 'Sim' 
+                and imovel.classificado == 'venda'
+                and imovel.destaque == 'Sim'
+            )]
+    imoveis_locacao = [imovel for imovel in get_all_imoveis() 
+            if (imovel.inativo != 'Sim' 
+                and imovel.classificado == 'locacao'
+                and imovel.destaque == 'Sim'
+            )]
+    return render_template('base.html', imoveis_venda=imoveis_venda , imoveis_locacao=imoveis_locacao)
 
 @blueprint_home.route('/header')
 def header():
     return render_template('menu.html')
 
-
-@blueprint_home.route('/imoveis')
-def imoveis():
-    imoveis = [imovel for imovel in get_all_imoveis() if imovel.inativo != 'True']
-    return render_template('lista_imoveis.html' , imoveis=imoveis)
 
 
 @blueprint_home.route('/footer')

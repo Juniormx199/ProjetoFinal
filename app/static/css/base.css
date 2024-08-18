@@ -1,0 +1,253 @@
+.div_carousel,
+.carousel-inner {
+    width: 100%;
+    height: 300;
+    margin-right: 30px;
+    position: relative;
+
+}
+
+.carousel-item img {
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}
+
+.div_equipe {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.options-container {
+    text-align: center;
+    margin: 70px 0;
+}
+
+.options-container h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    border: 1px solid rgba(158, 158, 158, 0.301);
+    font-weight: bold;
+}
+
+.option:hover {
+    background-color: #3F768C;
+}
+
+.option img {
+    width: 50px;
+    height: 50px;
+}
+
+.option span {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #112E40;
+}
+
+.option.selected {
+    background-color: #f0f0f0;
+}
+
+.titulo {
+    margin: 25px 0;
+    font-weight: bold;
+    color: #3F768C;
+}
+
+.div_titulo_destaque {
+    text-align: center;
+    margin: 30px 0 10px 0;
+}
+
+.titulo_form_filtro {
+    background-color: #112E40;
+    width: 100%;
+    max-width: 1280px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #F2F2F2;
+    border-radius: 7px;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.397);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.titulo_form_filtro .btn {
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+.container_pesquisa {
+    background-image: url('/static/imagens/pesquisa.png');
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 70vh;
+    display: flex;
+}
+
+.pesquisa_principal {
+    margin: auto auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.pesquisa_div {
+    width: 60%;
+    padding: 30px 10px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.678);
+}
+
+.pesquisa_div select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+.pesquisa_div option {
+    font-size: 16px;
+}
+
+#button_buscar {
+    cursor: pointer;
+    background-color: rgb(85, 85, 255);
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+    width: 150px;
+}
+
+
+
+.lista_pesquisa {
+    display: flex;
+    gap: 10px;
+}
+
+.lista_pesquisa label {
+    list-style: none;
+    padding: 20px;
+    color: white;
+    background-color: rgb(85, 85, 255);
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+input[type="radio"]:checked+label {
+    background-color: white;
+    color: black;
+}
+
+.lista_pesquisa input[type="radio"] {
+    display: none;
+}
+
+.inf_imoveis {
+    margin: 15px 0 15px 0;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-top: 1px solid rgb(212, 212, 212);
+}
+
+.inf_imoveis li {
+    list-style: none;
+    display: flex;
+}
+.options{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.multiple-items {
+    width: 100%; /* Faz com que o carrossel ocupe toda a largura disponível */
+    overflow: hidden; /* Garante que o conteúdo do carrossel não ultrapasse a largura */
+}
+
+
+.div_filtro_preco{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.div_filtro_preco input{
+    width: 150px;
+    
+}
+
+.pesquisa_div input , label{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+
+.btn a{
+    color: white;
+}
+
+.div_valor_destaques{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-body{
+    margin-top: 40px;
+}
+
+
+@media (max-width: 768px) {
+    .pesquisa_div {
+        width: 90%;
+
+    }
+    .card-body{
+        margin-top: 0px;
+    }
+
+}
