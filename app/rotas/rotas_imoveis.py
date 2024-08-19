@@ -351,4 +351,16 @@ def detalhe_imovel_comodidades():
 
 
 
-
+@blueprint_imoveis.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        usuario = request.form['usuario']
+        senha = request.form['senha']
+        if  usuario == 'adm': 
+                if senha == 'adm':
+                    return redirect(url_for('imoveis.home'))
+                else:
+                    return render_template('login_painel.html' , erro_senha='A senha que você inseriu está incorreta.')
+        else:
+            return render_template('login_painel.html' , erro_usuario='Usuario não encontrado')
+    return render_template('login_painel.html')

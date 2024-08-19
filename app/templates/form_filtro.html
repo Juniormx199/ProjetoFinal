@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -198,8 +198,8 @@
     <script src="/static/js/script.js"></script>
     <script src="/static/js/cru.js"></script>
     <script>
-        const botao = document.getElementById('filtrar');
-        botao.addEventListener("click", function (event) {
+        const botaofiltrar = document.getElementById('filtrar');
+        botaofiltrar.addEventListener("click", function (event) {
             event.preventDefault();
             const form = document.getElementById('filtroForm');
             const formData = new FormData(form);
@@ -210,10 +210,10 @@
             });
 
             const url = `{{ url_for('imoveis.buscar_imoveis') }}?${params.toString()}`;
-            botao.setAttribute('c-get', url);
+            botaofiltrar.setAttribute('c-get', url);
         });
 
-        botao.click();
+        botaofiltrar.click();
     </script>
 </body>
 
