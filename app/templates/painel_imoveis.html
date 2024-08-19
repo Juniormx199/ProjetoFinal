@@ -27,6 +27,7 @@
     <div class="dropzone_div">
       <div class="titulo_cadastro_painel">
         <h3>Cadastro de imóvel</h3>
+        <a href="{{ url_for('login.logout') }}" class="btn btn-danger">Sair</a>
       </div>
       <div c-container="{{url_for('imoveis.form_imoveis')}}" id="div_form_imoveis">
 

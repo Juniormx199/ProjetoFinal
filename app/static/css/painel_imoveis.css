@@ -153,6 +153,9 @@
 }
 
 .titulo_cadastro_painel {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     width: 100%;
     background-color: #dddddd;
     padding: 20px;

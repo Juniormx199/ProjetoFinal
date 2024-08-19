@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, Blueprint , url_for , redirect
+from flask_login import login_user, login_required, logout_user
 from app.models.models_imoveis import *
 from app import app
 from flask_dropzone import Dropzone
@@ -23,10 +24,12 @@ dropzone = Dropzone(app)
 blueprint_imoveis = Blueprint('imoveis', __name__)
 
 @blueprint_imoveis.route('/imoveis/')
+@login_required
 def home():
     return render_template('painel_imoveis.html')
 
 @blueprint_imoveis.route('/imoveis/new', methods=["POST"])
+@login_required
 def criar():
     if request.method == 'POST':
         data = request.get_json()
@@ -92,6 +95,7 @@ def criar():
         return {'pk': retorno}
 
 @blueprint_imoveis.route('/imoveis/update', methods=["PUT"])
+@login_required
 def atualizar():
      if request.method == 'PUT':
         data = request.json
@@ -155,6 +159,7 @@ def atualizar():
         return {'pk': pk}
 
 @blueprint_imoveis.route('/imoveis/upload/', methods=["POST"])
+@login_required
 def imagem_upload():
     if request.method == 'POST':
         pk_imovel = request.form.get('pk_imovel')
@@ -172,6 +177,7 @@ def imagem_upload():
 
 
 @blueprint_imoveis.route('/imoveis/delete/<int:pk_imovel>' ,methods= ['DELETE'] )
+@login_required
 def deletar(pk_imovel):
     deletar_imovel(pk_imovel)
 
@@ -184,6 +190,7 @@ def deletar(pk_imovel):
     return redirect(url_for('imoveis.home' , pagina=1))
 
 @blueprint_imoveis.route('/imagem/delete/<int:pk_imovel>/<file>' ,methods= ['DELETE'] )
+@login_required
 def deletar_imagem(pk_imovel , file):
     
     caminho_pasta = os.path.join(app.config['UPLOADED_PATH'], str(pk_imovel))
@@ -195,6 +202,7 @@ def deletar_imagem(pk_imovel , file):
 
 
 @blueprint_imoveis.route('/imoveis/edit/<pk_imovel>')
+@login_required
 def form_edit_imoveis(pk_imovel):
     imoveis = get_all_imoveis()
     caminho_pasta = os.path.join(app.config['UPLOADED_PATH'], str(pk_imovel))
@@ -207,6 +215,7 @@ def form_edit_imoveis(pk_imovel):
 
     
 @blueprint_imoveis.route('/imoveis/form/')
+@login_required
 def form_imoveis():
     return render_template('form_imoveis.html')
 
@@ -241,6 +250,7 @@ def lista_imagens(pk_imovel):
 
 
 @blueprint_imoveis.route('/imoveis/form_comodidades')
+@login_required
 def form_comodidades():
     pk_imovel = request.args.get('pk_imovel', '')
     
@@ -349,18 +359,3 @@ def detalhe_imovel_comodidades():
     comodidades = obter_comodidades_sim(pk_imovel)
     return render_template('comodidades_detalhe.html' , comodidades=comodidades)
 
-
-
-@blueprint_imoveis.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        usuario = request.form['usuario']
-        senha = request.form['senha']
-        if  usuario == 'adm': 
-                if senha == 'adm':
-                    return redirect(url_for('imoveis.home'))
-                else:
-                    return render_template('login_painel.html' , erro_senha='A senha que você inseriu está incorreta.')
-        else:
-            return render_template('login_painel.html' , erro_usuario='Usuario não encontrado')
-    return render_template('login_painel.html')
