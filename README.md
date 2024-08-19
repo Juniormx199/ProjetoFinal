@@ -11,10 +11,10 @@ Para garantir que seu site funcione corretamente, siga estas etapas:
 
 3. Cadastro e Alteração de Imóveis:
    - Acesse o Painel de Edição:
-     Clique em "Entrar" no menu principal.
+   Clique em "Entrar" no menu principal.
    - Login:
-     Usuário: adm
-     Senha: adm
+   Usuário: adm
+   Senha: adm
    Estas são as credenciais para acessar o painel de edição e inclusão de imóveis.
    Após realizar o login, você terá acesso contínuo ao painel de edição, a menos que clique em "Sair". Se fizer isso, será necessário realizar o login novamente para acessar o painel.
    
